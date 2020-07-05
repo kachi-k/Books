@@ -1,6 +1,7 @@
 package com.kachi.Books;
 
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
@@ -12,12 +13,19 @@ import java.util.Scanner;
 public class ApiUtil {
     private ApiUtil(){}
     public static final  String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
+    public static final String QUERY_PARAMETER_KEY = "q";
+    public static final String KEY = "key";
+    public static final String API_KEY = "AIzaSyB_-1oXj5YZNUGP4-0ATfICpovmDo-gaAM";
 
         public static URL buildUrl (String title) {
-            String fulUrl = BASE_API_URL + "?q" + title;
+
             URL url = null;
+            Uri uri = Uri.parse(BASE_API_URL).buildUpon()
+                    .appendQueryParameter(QUERY_PARAMETER_KEY, title)
+                    .appendQueryParameter(KEY, API_KEY)
+                    .build();
             try{
-                url = new URL (fulUrl);
+                url = new URL(uri.toString());
             }
             catch (Exception e){
                 e.printStackTrace();
